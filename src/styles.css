@@ -1,9 +1,11 @@
 .Rectangle {
-  
-    opacity: 0.8;
     border-radius: 6px;
     border: solid 1px #979797;
     background-color: #fff;
+    cursor: pointer;
+  }
+  .Rectangle:hover{
+    opacity: 0.8;
   }
   .Rectangle-26-Copy-23 {
     width: 15rem;
