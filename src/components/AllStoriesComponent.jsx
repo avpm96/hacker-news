@@ -14,11 +14,19 @@ import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import Pagination from "@mui/material/Pagination";
+import { getDateHoursBetweenCurrentDate } from "../utils/dates.js"
 export const AllStoriesComponent = () => {
+  const favoritesInLocalStorage =
+    JSON.parse(localStorage.getItem("favorites")) || [];
+  const favoritesIdsInLocalStorage =
+    favoritesInLocalStorage.map((item) => item.objectID) || [];
+
   const [search, setSearch] = React.useState("");
   const [data, setData] = React.useState([]);
-  const [favorites, setFavorites] = React.useState([]);
-  const [favoritesIds, setFavoritesIds] = React.useState([]);
+  const [favorites, setFavorites] = React.useState(favoritesInLocalStorage);
+  const [favoritesIds, setFavoritesIds] = React.useState(
+    favoritesIdsInLocalStorage
+  );
 
   const openUrl = (url) => {
     window.open(url, "_blank", "noopener");
@@ -56,22 +64,33 @@ export const AllStoriesComponent = () => {
   };
 
   return (
-    <Container sx={{ py: 8 }} maxWidth="md">
-      <Stack sx={{ py: 4 }} direction="row" spacing={2} justifyContent="start">
-        <FormControl sx={{ m: 1, minWidth: 120 }}>
+    <Container sx={{ py: 8 }} maxWidth="md" >
+      <Stack sx={{ py: 4 }} direction="row" spacing={2} justifyContent="start" >
+        <FormControl sx={{ m: 1, minWidth: 200 }} >
           <InputLabel id="demo-simple-select-standard-label">
             select your news
           </InputLabel>
-          <Select
+          <Select 
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             value={search}
             label="Select your news"
             onChange={handleChange}
           >
-            <MenuItem value="angular">Angular</MenuItem>
-            <MenuItem value="reactjs">React.js</MenuItem>
-            <MenuItem value="vuejs">Vue.js</MenuItem>
+            <MenuItem value="angular">
+              <div>
+                <img  className="image" src="/src/assets/icons/angular.jpg" />
+                <span className="select">Angular</span>
+              </div>
+            </MenuItem>
+            <MenuItem value="reactjs"><div>
+                <img  className="image" src="/src/assets/icons/react.jpg" />
+                <span className="select">React.js</span>
+              </div></MenuItem>
+            <MenuItem value="vuejs"><div>
+                <img  className="image" src="/src/assets/icons/vue.jpg" />
+                <span className="select">Vue.js</span>
+              </div></MenuItem>
           </Select>
         </FormControl>
       </Stack>
@@ -91,31 +110,41 @@ export const AllStoriesComponent = () => {
                 sx={{ flexGrow: 1 }}
               >
                 <Typography icon={<FavoriteIcon />}>
-                  {card.created_at} by {card.author}
+                   {`${getDateHoursBetweenCurrentDate(card.created_at)} hours ago`} by autor {card.author}
                 </Typography>
-                <Typography>{card.story_title}</Typography>
+                <Typography className="word">{card.story_title}</Typography>
               </CardContent>
-              <CardActions>
-                <Button>
-                  <FavoriteIcon
-                    onClick={() => toggleFavorites(card)}
-                    sx={{
-                      color: [
-                        favoritesIds.includes(card.objectID)
-                          ? pink[500]
-                          : grey[500],
-                      ],
-                    }}
-                  />
-                </Button>
-              </CardActions>
+              <div className="Rectangle-grey">
+                <CardActions>
+                  <Button>
+                    <FavoriteIcon
+                      onClick={() => toggleFavorites(card)}
+                      sx={{
+                        py: 5,
+                        color: [
+                          favoritesIds.includes(card.objectID)
+                            ? pink[500]
+                            : grey[500],
+                        ],
+                      }}
+                    />
+                  </Button>
+                </CardActions>
+              </div>
             </Card>
           </Grid>
         ))}
       </Grid>
-      <Stack sx={{ py: 4 }} direction="row" spacing={2} justifyContent="center">
-        <Pagination count={10}  shape="rounded" color="primary" />
-      </Stack>
+      {search.length > 0 && (
+        <Stack
+          sx={{ py: 4 }}
+          direction="row"
+          spacing={2}
+          justifyContent="center"
+        >
+          <Pagination count={10} shape="rounded" color="primary" />
+        </Stack>
+      )}
     </Container>
   );
 };
