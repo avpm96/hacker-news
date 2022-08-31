@@ -5,15 +5,12 @@ import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import Pagination from "@mui/material/Pagination";
+import { getDateHoursBetweenCurrentDate } from "../utils/dates.js"
 export const FavesComponent = () => {
   const favorites = JSON.parse(localStorage.getItem("favorites"));
 
@@ -62,7 +59,7 @@ export const FavesComponent = () => {
                 sx={{ flexGrow: 1 }}
               >
                 <Typography icon={<FavoriteIcon />}>
-                  {card.created_at} by {card.author}
+                {`${getDateHoursBetweenCurrentDate(card.created_at)} hours ago`} by autor {card.author} by {card.author}
                 </Typography>
                 <Typography>{card.story_title}</Typography>
               </CardContent>
