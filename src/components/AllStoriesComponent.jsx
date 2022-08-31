@@ -15,6 +15,9 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import Pagination from "@mui/material/Pagination";
 import { getDateHoursBetweenCurrentDate } from "../utils/dates.js"
+import AngularLogo from '../assets/icons/angular.jpg';
+import ReactLogo from '../assets/icons/react.jpg';
+import VueLogo from '../assets/icons/vue.jpg';
 export const AllStoriesComponent = () => {
   const favoritesInLocalStorage =
     JSON.parse(localStorage.getItem("favorites")) || [];
@@ -79,16 +82,16 @@ export const AllStoriesComponent = () => {
           >
             <MenuItem value="angular">
               <div>
-                <img  className="image" src="/src/assets/icons/angular.jpg" />
+                <img  className="image" src={AngularLogo} />
                 <span className="select">Angular</span>
               </div>
             </MenuItem>
             <MenuItem value="reactjs"><div>
-                <img  className="image" src="/src/assets/icons/react.jpg" />
+                <img  className="image" src={ReactLogo} />
                 <span className="select">React.js</span>
               </div></MenuItem>
             <MenuItem value="vuejs"><div>
-                <img  className="image" src="/src/assets/icons/vue.jpg" />
+                <img  className="image" src={VueLogo} />
                 <span className="select">Vue.js</span>
               </div></MenuItem>
           </Select>
